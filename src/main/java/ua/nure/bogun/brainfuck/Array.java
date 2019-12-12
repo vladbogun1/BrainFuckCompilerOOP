@@ -1,19 +1,19 @@
 package ua.nure.bogun.brainfuck;
 
-public class Array {
+class Array {
     private static final int LENGTH = 65535;
-    public byte[] arr;
+    byte[] arr;
     private int pointer;
     Array(){
         arr = new byte[LENGTH];
         pointer = 0;
     }
 
-    public int getPointer() {
+    int getPointer() {
         return pointer;
     }
 
-    public void setPointer(int pointer) {
+    void setPointer(int pointer) {
         if(pointer>=arr.length) {
             this.pointer = 0;
         } else if(pointer<0) {
