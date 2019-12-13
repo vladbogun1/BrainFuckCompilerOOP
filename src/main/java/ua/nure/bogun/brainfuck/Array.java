@@ -4,7 +4,8 @@ class Array {
     private static final int LENGTH = 65535;
     byte[] arr;
     private int pointer;
-    Array(){
+
+    Array() {
         arr = new byte[LENGTH];
         pointer = 0;
     }
@@ -13,14 +14,14 @@ class Array {
         return pointer;
     }
 
-    void setPointer(int pointer) {
-        if(pointer>=arr.length) {
-            this.pointer = 0;
-        } else if(pointer<0) {
-            this.pointer = arr.length - 1;
+    int setPointer(int pointer) {
+        if (pointer >= arr.length) {
+            this.pointer = pointer - arr.length;
+        } else if (pointer < 0) {
+            this.pointer = arr.length + pointer;
         } else {
             this.pointer = pointer;
         }
-
+        return this.pointer;
     }
 }

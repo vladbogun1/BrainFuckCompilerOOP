@@ -8,19 +8,26 @@ public class Compiler {
     private BrainFuck compiler;
     private char[] brainFuckCommand;
 
-    Compiler(String command ,BrainFuck brainFuck){
+    Compiler(String command, BrainFuck brainFuck) {
         this.compiler = brainFuck;
         this.list = new ArrayList<>();
-        this.brainFuckCommand = command.toCharArray();
+        try {
+            this.brainFuckCommand = command.toCharArray();
+        } catch (NullPointerException e) {
+            System.out.println("Command can not be null!");
+            this.brainFuckCommand = "".toCharArray();
+        }
         read();
     }
-    Compiler(char[] command ,BrainFuck brainFuck){
+
+    Compiler(char[] command, BrainFuck brainFuck) {
         this.compiler = brainFuck;
         this.list = new ArrayList<>();
         this.brainFuckCommand = command;
         read();
     }
-    private void read(){
+
+    private void read() {
 
 
         for (int i = 0; i < brainFuckCommand.length; i++) {
@@ -44,9 +51,14 @@ public class Compiler {
                     break;
                 case '[':
                     int nextPoint = getEndWhile(i);
-                    char[] arr = cutLoop(i,nextPoint);
-                    list.add(new LoopCommand(compiler,arr));
-                    i=nextPoint;
+                    if (nextPoint != -1) {
+                        char[] arr = cutLoop(i, nextPoint);
+                        list.add(new LoopCommand(compiler, arr));
+                        i = nextPoint;
+                    } else {
+                        System.out.println("Braces were not closed properly!");
+                        brainFuckCommand = "".toCharArray();
+                    }
                     break;
                 case ']':
                     continue;
@@ -58,38 +70,38 @@ public class Compiler {
 
     }
 
-    List<Command> getList(){
+    List<Command> getList() {
         return this.list;
     }
-    private int getEndWhile(int start){
 
-        int position = start;
+    private int getEndWhile(int start) {
+        int position = -1;
         int count = 1;
-        for(int i = start+1;i<brainFuckCommand.length && count>0;i++){
-            switch(brainFuckCommand[i]){
+        for (int i = start + 1; i < brainFuckCommand.length && count > 0; i++) {
+            switch (brainFuckCommand[i]) {
                 case '[':
                     count++;
                     break;
                 case ']':
                     count--;
-                    position = i;
+                    if (count == 0) {
+                        position = i;
+                    }
                     break;
             }
-
         }
         return position;
     }
 
-
-    private char[] cutLoop(int start, int end){
+    private char[] cutLoop(int start, int end) {
         int length = end - start;
         char[] loop = new char[length];
-        System.arraycopy(brainFuckCommand,start+1,loop,0,length);
+        System.arraycopy(brainFuckCommand, start + 1, loop, 0, length);
         return loop;
     }
 
-    public void execute(){
-        for (Command command: list) {
+    public void execute() {
+        for (Command command : list) {
             command.execute();
         }
     }

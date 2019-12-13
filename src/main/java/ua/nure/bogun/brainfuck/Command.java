@@ -1,5 +1,5 @@
 package ua.nure.bogun.brainfuck;
 
-public interface Command {
+interface Command {
     void execute();
 }
