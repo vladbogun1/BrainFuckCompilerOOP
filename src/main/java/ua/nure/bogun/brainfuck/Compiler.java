@@ -29,45 +29,50 @@ public class Compiler {
 
     private void read() {
 
-
+        int counter = 1;
         for (int i = 0; i < brainFuckCommand.length; i++) {
             char operation = brainFuckCommand[i];
-
-            switch (operation) {
-                case '>':
-                    list.add(new NextCommand(compiler));
-                    break;
-                case '<':
-                    list.add(new PrevCommand(compiler));
-                    break;
-                case '+':
-                    list.add(new IncrementCommand(compiler));
-                    break;
-                case '-':
-                    list.add(new DecrementCommand(compiler));
-                    break;
-                case '.':
-                    list.add(new PrintCommand(compiler));
-                    break;
-                case '@':
-                    list.add(new PrintPointerCommand(compiler));
-                    break;
-                case '[':
-                    int nextPoint = getEndWhile(i);
-                    if (nextPoint != -1) {
-                        char[] arr = cutLoop(i, nextPoint);
-                        list.add(new LoopCommand(compiler, arr));
-                        i = nextPoint;
-                    } else {
-                        System.out.println("Braces were not closed properly!");
-                        brainFuckCommand = "".toCharArray();
-                    }
-                    break;
-                case ']':
-                    continue;
-                default:
-                    System.out.println("Wrong command!");
-                    break;
+            if (i+1 <brainFuckCommand.length && operation == brainFuckCommand[i + 1]){
+                counter++;
+            }
+            else {
+                switch (operation) {
+                    case '>':
+                        list.add(new NextCommand(compiler,counter));
+                        break;
+                    case '<':
+                        list.add(new PrevCommand(compiler,counter));
+                        break;
+                    case '+':
+                        list.add(new IncrementCommand(compiler,counter));
+                        break;
+                    case '-':
+                        list.add(new DecrementCommand(compiler,counter));
+                        break;
+                    case '.':
+                        list.add(new PrintCommand(compiler,counter));
+                        break;
+                    case '@':
+                        list.add(new PrintPointerCommand(compiler,counter));
+                        break;
+                    case '[':
+                        int nextPoint = getEndWhile(i);
+                        if (nextPoint != -1) {
+                            char[] arr = cutLoop(i, nextPoint);
+                            list.add(new LoopCommand(compiler, arr));
+                            i = nextPoint;
+                        } else {
+                            System.out.println("Braces were not closed properly!");
+                            brainFuckCommand = "".toCharArray();
+                        }
+                        break;
+                    case ']':
+                        continue;
+                    default:
+                        System.out.println("Wrong command!");
+                        break;
+                }
+                counter=1;
             }
         }
 

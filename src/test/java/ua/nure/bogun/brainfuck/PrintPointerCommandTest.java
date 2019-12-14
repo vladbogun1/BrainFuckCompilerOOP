@@ -47,7 +47,7 @@ public class PrintPointerCommandTest {
                 brainFuck.next();
                 n--;
             }
-            PrintPointerCommand printPointerCommand = new PrintPointerCommand(brainFuck);
+            PrintPointerCommand printPointerCommand = new PrintPointerCommand(brainFuck,1);
             printPointerCommand.execute();
             assertEquals(point.expected, OUTPUT_OUT.toString());
             OUTPUT_OUT.reset();

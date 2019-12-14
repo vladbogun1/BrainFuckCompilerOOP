@@ -169,18 +169,18 @@ public class BrainFuckTest {
                 new Inspect(
                         new LinkedList<>(
                                 Arrays.asList(
-                                        new IncrementCommand(brainFuck),
-                                        new PrintCommand(brainFuck),
-                                        new NextCommand(brainFuck)
+                                        new IncrementCommand(brainFuck,1),
+                                        new PrintCommand(brainFuck,1),
+                                        new NextCommand(brainFuck,1)
                                 )
                         ), new byte[]{3,2}
                 ),
                 new Inspect(
                         new LinkedList<>(
                                 Arrays.asList(
-                                        new DecrementCommand(brainFuck),
-                                        new PrintCommand(brainFuck),
-                                        new NextCommand(brainFuck)
+                                        new DecrementCommand(brainFuck,1),
+                                        new PrintCommand(brainFuck,1),
+                                        new NextCommand(brainFuck,1)
                                 )
                         ), new byte[]{1,0}
                 ),

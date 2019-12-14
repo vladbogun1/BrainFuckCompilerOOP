@@ -45,7 +45,7 @@ public class PrevCommandTest {
             BrainFuck brainFuck = new BrainFuck();
             brainFuck.next();
 
-            PrevCommand prevCommand = new PrevCommand(brainFuck);
+            PrevCommand prevCommand = new PrevCommand(brainFuck,1);
             int n = (int) com.command;
             while (n > 0) {
                 brainFuck.increment();

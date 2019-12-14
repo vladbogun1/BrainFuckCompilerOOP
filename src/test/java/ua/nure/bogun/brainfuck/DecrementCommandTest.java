@@ -32,11 +32,9 @@ public class DecrementCommandTest {
     @Test
     public void executeDecrement() {
         BrainFuck brainFuck = new BrainFuck();
-        IncrementCommand incrementCommand = new IncrementCommand(brainFuck);
+        IncrementCommand incrementCommand = new IncrementCommand(brainFuck,3);
         incrementCommand.execute();
 
-        brainFuck.increment();
-        brainFuck.increment();
 
         brainFuck.output();
         char oldItem = OUTPUT_OUT.toString().toCharArray()[0];

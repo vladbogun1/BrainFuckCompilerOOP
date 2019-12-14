@@ -43,7 +43,7 @@ public class NextCommandTest {
 
         for (Inspect com : arr) {
             BrainFuck brainFuck = new BrainFuck();
-            NextCommand nextCommand = new NextCommand(brainFuck);
+            NextCommand nextCommand = new NextCommand(brainFuck,1);
             int n = (int) com.command;
             while (n > 0) {
                 brainFuck.increment();
