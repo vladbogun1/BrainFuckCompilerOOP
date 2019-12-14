@@ -1,7 +1,6 @@
 package ua.nure.bogun.brainfuck;
 
 
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -35,11 +34,10 @@ public class DemoTest {
     public void doRunMain() {
 
 
-
         Inspect[] tests = {
-                new Inspect("++++++++[>++++[>++>+++>+++>+<<<<-]" +
+                new Inspect("++@++++++[>++++[>++>+++>+++>+<<<<-]" +
                         ">+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+" +
-                        "++.------.--------.>>+.", "Hello World!"),
+                        "++.------.--------.>>+.", "0Hello World!"),
                 new Inspect("6++++++++[>++++[>++>+++>+++>+<<<<-]" +
                         ">+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.++" +
                         "+.------.--------.>>+.", "Wrong command!" +
@@ -52,7 +50,7 @@ public class DemoTest {
         };
         for (Inspect test : tests) {
             BrainFuck brainFuck = new BrainFuck();
-            Compiler compiler = new Compiler((String)test.command, brainFuck);
+            Compiler compiler = new Compiler((String) test.command, brainFuck);
             compiler.execute();
             assertEquals(test.expected, OUTPUT_OUT.toString());
             OUTPUT_OUT.reset();

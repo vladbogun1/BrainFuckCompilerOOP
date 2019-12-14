@@ -6,6 +6,9 @@ import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.Arrays;
+import java.util.LinkedList;
+
 
 import static org.junit.Assert.*;
 
@@ -14,7 +17,6 @@ public class BrainFuckTest {
     private final ByteArrayOutputStream OUTPUT_ERR = new ByteArrayOutputStream();
     private final PrintStream ORIGIN_OUT = System.out;
     private final PrintStream ORIGIN_ERR = System.err;
-
 
 
     @Before
@@ -29,34 +31,56 @@ public class BrainFuckTest {
         System.setErr(ORIGIN_ERR);
     }
 
-//    @Test
-//    public void next() {
-//        int[] pointers = {1,2,3,44,5555,0,-1,65535};
-//        BrainFuck brainFuck = new BrainFuck();
-//        for (int point : pointers) {
-//            int n = point;
-//            while(n>0){
-//                brainFuck.next();
-//                n++;
-//            }
-//
-//            assertEquals(point+1, brainFuck.getPointer());
-//        }
-//    }
+    @Test
+    public void next() {
+        Inspect[] tests = {
+                new Inspect(1, "2"),
+                new Inspect(2, "3"),
+                new Inspect(3, "4"),
+                new Inspect(44, "45"),
+                new Inspect(-1, "1"),
+                new Inspect(65534, "0")
+        };
 
-//    @Test
-//    public void prev() {
-//        int[] pointers = {1,2,3,44,5555,0,-1,65535};
-//        BrainFuck brainFuck = new BrainFuck();
-//        for (int point : pointers) {
-//            int n = point;
-//            while(n>0){
-//                brainFuck.prev();
-//                n++;
-//            }
-//            assertEquals(point-1, brainFuck.getPointer());
-//        }
-//    }
+
+        for (Inspect point : tests) {
+            BrainFuck brainFuck = new BrainFuck();
+            int n = (int) point.command;
+            while (n > 0) {
+                brainFuck.next();
+                n--;
+            }
+            brainFuck.next();
+            brainFuck.printPointer();
+            assertEquals(point.expected, OUTPUT_OUT.toString());
+            OUTPUT_OUT.reset();
+        }
+    }
+
+    @Test
+    public void prev() {
+        Inspect[] tests = {
+                new Inspect(1, "0"),
+                new Inspect(2, "1"),
+                new Inspect(3, "2"),
+                new Inspect(44, "43"),
+                new Inspect(-1, "65534")
+        };
+
+
+        for (Inspect point : tests) {
+            BrainFuck brainFuck = new BrainFuck();
+            int n = (int) point.command;
+            while (n > 0) {
+                brainFuck.next();
+                n--;
+            }
+            brainFuck.prev();
+            brainFuck.printPointer();
+            assertEquals(point.expected, OUTPUT_OUT.toString());
+            OUTPUT_OUT.reset();
+        }
+    }
 
     @Test
     public void increment() {
@@ -69,7 +93,7 @@ public class BrainFuckTest {
         brainFuck.output();
         char newItem = OUTPUT_OUT.toString().toCharArray()[0];
         OUTPUT_OUT.reset();
-        assertEquals(oldItem+1,newItem);
+        assertEquals(oldItem + 1, newItem);
     }
 
     @Test
@@ -86,7 +110,7 @@ public class BrainFuckTest {
         brainFuck.output();
         char newItem = OUTPUT_OUT.toString().toCharArray()[0];
         OUTPUT_OUT.reset();
-        assertEquals(oldItem-1,newItem);
+        assertEquals(oldItem - 1, newItem);
     }
 
     @Test
@@ -110,6 +134,81 @@ public class BrainFuckTest {
     }
 
     @Test
-    public void loop() {
+    public void printPointer() {
+        Inspect[] tests = {
+                new Inspect(1, "1"),
+                new Inspect(2, "2"),
+                new Inspect(3, "3"),
+                new Inspect(44, "44"),
+                new Inspect(-1, "0"),
+                new Inspect(65534, "65534"),
+                new Inspect(65535, "0")
+        };
+
+
+        for (Inspect point : tests) {
+            BrainFuck brainFuck = new BrainFuck();
+            int n = (int) point.command;
+            while (n > 0) {
+                brainFuck.next();
+                n--;
+            }
+            brainFuck.printPointer();
+            assertEquals(point.expected, OUTPUT_OUT.toString());
+            OUTPUT_OUT.reset();
+        }
+
     }
+
+    @Test
+    public void loop() {
+        BrainFuck brainFuck = new BrainFuck();
+
+
+        Inspect[] tests = {
+                new Inspect(
+                        new LinkedList<>(
+                                Arrays.asList(
+                                        new IncrementCommand(brainFuck),
+                                        new PrintCommand(brainFuck),
+                                        new NextCommand(brainFuck)
+                                )
+                        ), new byte[]{3,2}
+                ),
+                new Inspect(
+                        new LinkedList<>(
+                                Arrays.asList(
+                                        new DecrementCommand(brainFuck),
+                                        new PrintCommand(brainFuck),
+                                        new NextCommand(brainFuck)
+                                )
+                        ), new byte[]{1,0}
+                ),
+                new Inspect(
+                        new LinkedList<>(), new byte[]{}
+                )
+
+        };
+        for (Inspect test: tests) {
+            brainFuck.increment();
+            brainFuck.increment();
+
+
+
+            brainFuck.next();
+            brainFuck.increment();
+            brainFuck.prev();
+            LinkedList<Command> loop = (LinkedList)test.command;
+            brainFuck.loop(loop);
+
+
+            assertEquals(
+                    new String((byte[])test.expected),
+                    OUTPUT_OUT.toString()
+            );
+            OUTPUT_OUT.reset();
+        }
+    }
+
+
 }

@@ -49,6 +49,9 @@ public class Compiler {
                 case '.':
                     list.add(new PrintCommand(compiler));
                     break;
+                case '@':
+                    list.add(new PrintPointerCommand(compiler));
+                    break;
                 case '[':
                     int nextPoint = getEndWhile(i);
                     if (nextPoint != -1) {

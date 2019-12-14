@@ -5,7 +5,6 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 
-
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
         ArrayTest.class,
@@ -15,10 +14,12 @@ import org.junit.runners.Suite;
         NextCommandTest.class,
         PrevCommandTest.class,
         PrintCommandTest.class,
-        CompilerTest.class,
+        PrintPointerCommandTest.class,
         LoopCommandTest.class,
+        CompilerTest.class,
         DemoTest.class
 })
+
 public class MainTest extends Assert {
 
 }

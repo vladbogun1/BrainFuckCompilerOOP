@@ -9,12 +9,11 @@ import java.io.PrintStream;
 
 import static org.junit.Assert.*;
 
-public class PrintCommandTest {
+public class PrintPointerCommandTest {
     private final ByteArrayOutputStream OUTPUT_OUT = new ByteArrayOutputStream();
     private final ByteArrayOutputStream OUTPUT_ERR = new ByteArrayOutputStream();
     private final PrintStream ORIGIN_OUT = System.out;
     private final PrintStream ORIGIN_ERR = System.err;
-    private final String SEPARATOR = System.lineSeparator();
 
 
     @Before
@@ -28,34 +27,31 @@ public class PrintCommandTest {
         System.setOut(ORIGIN_OUT);
         System.setErr(ORIGIN_ERR);
     }
-
-
     @Test
-    public void executePrint() {
-        Inspect[] arr = {
-                new Inspect(74, "J"),
-                new Inspect(82, "R"),
-                new Inspect(99, "c"),
-                new Inspect(115, "s"),
-                new Inspect(64, "@"),
-
+    public void executePrintPointer() {
+        Inspect[] tests = {
+                new Inspect(1, "1"),
+                new Inspect(2, "2"),
+                new Inspect(3, "3"),
+                new Inspect(44, "44"),
+                new Inspect(-1, "0"),
+                new Inspect(65534, "65534"),
+                new Inspect(65535, "0")
         };
 
 
-        for (Inspect com : arr) {
+        for (Inspect point : tests) {
             BrainFuck brainFuck = new BrainFuck();
-            PrintCommand printCommand = new PrintCommand(brainFuck);
-            int n = (int) com.command;
+            int n = (int) point.command;
             while (n > 0) {
-                brainFuck.increment();
+                brainFuck.next();
                 n--;
             }
-
-            printCommand.execute();
-            assertEquals(com.expected, OUTPUT_OUT.toString());
+            PrintPointerCommand printPointerCommand = new PrintPointerCommand(brainFuck);
+            printPointerCommand.execute();
+            assertEquals(point.expected, OUTPUT_OUT.toString());
             OUTPUT_OUT.reset();
         }
-
-
     }
+
 }
