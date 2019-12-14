@@ -30,10 +30,16 @@ class BrainFuck {
         System.out.print((char) memory.arr[memory.getPointer()]);
     }
 
+    void printPointer(){
+        System.out.print(memory.getPointer());
+    }
+
     void loop(List<Command> commands) {
-        while (memory.arr[memory.getPointer()] > 0) {
-            for (Command command : commands) {
-                command.execute();
+        if(commands.size()>0) {
+            while (memory.arr[memory.getPointer()] > 0) {
+                for (Command command : commands) {
+                    command.execute();
+                }
             }
         }
     }
