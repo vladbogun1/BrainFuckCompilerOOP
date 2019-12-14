@@ -46,10 +46,8 @@ public class PrintCommandTest {
             BrainFuck brainFuck = new BrainFuck();
             PrintCommand printCommand = new PrintCommand(brainFuck,1);
             int n = (int) com.command;
-            while (n > 0) {
-                brainFuck.increment();
-                n--;
-            }
+            IncrementCommand incrementCommand = new IncrementCommand(brainFuck,n);
+            incrementCommand.execute();
 
             printCommand.execute();
             assertEquals(com.expected, OUTPUT_OUT.toString());

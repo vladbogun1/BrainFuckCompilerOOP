@@ -46,10 +46,10 @@ public class BrainFuckTest {
         for (Inspect point : tests) {
             BrainFuck brainFuck = new BrainFuck();
             int n = (int) point.command;
-            while (n > 0) {
-                brainFuck.next();
-                n--;
-            }
+            NextCommand  nextCommand = new NextCommand(brainFuck,n);
+            nextCommand.execute();
+
+
             brainFuck.next();
             brainFuck.printPointer();
             assertEquals(point.expected, OUTPUT_OUT.toString());
@@ -71,10 +71,8 @@ public class BrainFuckTest {
         for (Inspect point : tests) {
             BrainFuck brainFuck = new BrainFuck();
             int n = (int) point.command;
-            while (n > 0) {
-                brainFuck.next();
-                n--;
-            }
+            NextCommand  nextCommand = new NextCommand(brainFuck,n);
+            nextCommand.execute();
             brainFuck.prev();
             brainFuck.printPointer();
             assertEquals(point.expected, OUTPUT_OUT.toString());
@@ -100,8 +98,8 @@ public class BrainFuckTest {
     public void decrement() {
         BrainFuck brainFuck = new BrainFuck();
 
-        brainFuck.increment();
-        brainFuck.increment();
+        IncrementCommand  incrementCommand = new IncrementCommand(brainFuck,2);
+        incrementCommand.execute();
 
         brainFuck.output();
         char oldItem = OUTPUT_OUT.toString().toCharArray()[0];
@@ -149,10 +147,8 @@ public class BrainFuckTest {
         for (Inspect point : tests) {
             BrainFuck brainFuck = new BrainFuck();
             int n = (int) point.command;
-            while (n > 0) {
-                brainFuck.next();
-                n--;
-            }
+            NextCommand  nextCommand = new NextCommand(brainFuck,n);
+            nextCommand.execute();
             brainFuck.printPointer();
             assertEquals(point.expected, OUTPUT_OUT.toString());
             OUTPUT_OUT.reset();
@@ -190,8 +186,8 @@ public class BrainFuckTest {
 
         };
         for (Inspect test: tests) {
-            brainFuck.increment();
-            brainFuck.increment();
+            IncrementCommand  incrementCommand = new IncrementCommand(brainFuck,2);
+            incrementCommand.execute();
 
 
 

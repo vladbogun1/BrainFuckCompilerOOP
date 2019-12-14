@@ -43,10 +43,8 @@ public class PrintPointerCommandTest {
         for (Inspect point : tests) {
             BrainFuck brainFuck = new BrainFuck();
             int n = (int) point.command;
-            while (n > 0) {
-                brainFuck.next();
-                n--;
-            }
+            NextCommand nextCommand = new NextCommand(brainFuck,n);
+            nextCommand.execute();
             PrintPointerCommand printPointerCommand = new PrintPointerCommand(brainFuck,1);
             printPointerCommand.execute();
             assertEquals(point.expected, OUTPUT_OUT.toString());
