@@ -5,11 +5,11 @@ import java.util.List;
 
 public class Compiler {
     private List<Command> list;
-    private BrainFuck compiler;
+    private BrainFuck brainFuck;
     private char[] brainFuckCommand;
 
     Compiler(String command, BrainFuck brainFuck) {
-        this.compiler = brainFuck;
+        this.brainFuck = brainFuck;
         this.list = new ArrayList<>();
         try {
             this.brainFuckCommand = command.toCharArray();
@@ -21,7 +21,7 @@ public class Compiler {
     }
 
     Compiler(char[] command, BrainFuck brainFuck) {
-        this.compiler = brainFuck;
+        this.brainFuck = brainFuck;
         this.list = new ArrayList<>();
         this.brainFuckCommand = command;
         read();
@@ -38,28 +38,28 @@ public class Compiler {
             else {
                 switch (operation) {
                     case '>':
-                        list.add(new NextCommand(compiler,counter));
+                        list.add(new NextCommand(brainFuck,counter));
                         break;
                     case '<':
-                        list.add(new PrevCommand(compiler,counter));
+                        list.add(new PrevCommand(brainFuck,counter));
                         break;
                     case '+':
-                        list.add(new IncrementCommand(compiler,counter));
+                        list.add(new IncrementCommand(brainFuck,counter));
                         break;
                     case '-':
-                        list.add(new DecrementCommand(compiler,counter));
+                        list.add(new DecrementCommand(brainFuck,counter));
                         break;
                     case '.':
-                        list.add(new PrintCommand(compiler,counter));
+                        list.add(new PrintCommand(brainFuck,counter));
                         break;
                     case '@':
-                        list.add(new PrintPointerCommand(compiler,counter));
+                        list.add(new PrintPointerCommand(brainFuck,counter));
                         break;
                     case '[':
                         int nextPoint = getEndWhile(i);
                         if (nextPoint != -1) {
                             char[] arr = cutLoop(i, nextPoint);
-                            list.add(new LoopCommand(compiler, arr));
+                            list.add(new LoopCommand(brainFuck, arr));
                             i = nextPoint;
                         } else {
                             System.out.println("Braces were not closed properly!");
@@ -86,16 +86,13 @@ public class Compiler {
         int position = -1;
         int count = 1;
         for (int i = start + 1; i < brainFuckCommand.length && count > 0; i++) {
-            switch (brainFuckCommand[i]) {
-                case '[':
-                    count++;
-                    break;
-                case ']':
-                    count--;
-                    if (count == 0) {
-                        position = i;
-                    }
-                    break;
+            if (brainFuckCommand[i] == '[') {
+                count++;
+            } else if (brainFuckCommand[i] == ']') {
+                count--;
+                if (count == 0) {
+                    position = i;
+                }
             }
         }
         return position;
