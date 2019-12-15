@@ -35,7 +35,7 @@ class BrainFuck {
     }
 
     void loop(List<Command> commands) {
-        if(commands.size()>0) {
+        if(!commands.isEmpty()) {
             while (memory.arr[memory.getPointer()] > 0) {
                 for (Command command : commands) {
                     command.execute();
