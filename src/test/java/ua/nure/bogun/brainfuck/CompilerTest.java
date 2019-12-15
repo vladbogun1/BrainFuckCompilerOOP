@@ -8,6 +8,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -38,17 +39,16 @@ public class CompilerTest {
         Inspect[] tests = {
                 new Inspect("++",
                         new ArrayList<>(
-                                Arrays.asList(
-                                        new IncrementCommand(brainFuck),
-                                        new IncrementCommand(brainFuck)
+                                Collections.singletonList(
+                                        new IncrementCommand(brainFuck, 2)
                                 )
                         )
                 ),
                 new Inspect("-+",
                         new ArrayList<>(
                                 Arrays.asList(
-                                        new DecrementCommand(brainFuck),
-                                        new IncrementCommand(brainFuck)
+                                        new DecrementCommand(brainFuck,1),
+                                        new IncrementCommand(brainFuck,1)
                                 )
                         )
                 ),

@@ -34,7 +34,7 @@ public class IncrementCommandTest {
     @Test
     public void executeIncrement() {
         BrainFuck brainFuck = new BrainFuck();
-        IncrementCommand incrementCommand = new IncrementCommand(brainFuck);
+        IncrementCommand incrementCommand = new IncrementCommand(brainFuck,6);
         incrementCommand.execute();
 
         brainFuck.output();

@@ -1,51 +1,62 @@
 # BrainFuckCompilerOOP
 Java compiler from BrainFuck code to text
+<h3><b>Run</b></h3>
 
-<h3><b>Brainfuck Compiler</b></h3>
+1. Go to <code>BrainFuckCompilerOOP/src/main/</code> directory.
+2. Open CMD
+3. Run command <code>brainfuck "%COMMAND%"</code> where <code>%COMMAND%</code> is your command
 
-Написать программу на Java, которая выполняет программу, написанную на языке
+<h5><b>For example:</b></h5>
+<code>C:\BrainFuckCompilerOOP\src\main>brainfuck "++++++++++++++++++++++++++++++++++++++."
+
+&</code>
+<h3><b>Task</b></h3>
+<h5><b>Brainfuck Compiler</b></h5>
+
+Write a Java program that runs a program written in the language
 Brainfuck
 
-Входные данные: строка с Brainfuck инструкциями 
+Input: Brainfuck line of instructions
 
-<code>++++++++++[>+++++++>++++++++++>+++>+<<<<-]>++
- .>+.+++++++..+++.>++.<<+++++++++++++++.>.+++.
- ------.--------.>+.>.</code>
+<code>++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.</code>
  
-Выходные данные: строка, содержащая output выполненной программы <code>Hello World!</code>
+Output: a string containing the output of a executed program 
+<code>Hello World!</code>
 
-<h3><b>Дополнительные требования:</b></h3>
+<h3><b>Additional requirements:</b></h3>
 
-Выполнение программы должно состоять из 2-х этапов:
+The implementation of the program should consist of 2 stages:
 
-1. Компиляция. По входящей строке строится модель данных, применяя принципы
-ооп и паттерны проектирования.
-2. Выполнение. Произвести выполнение программы по построенной модели, без
-доступа к оригинальной строке.
+1. Compilation. An input line is used to construct a data model using the principles
+OOP and design patterns.
+2. Execution. To execute the program according to the constructed model, without
+access to the original line.
 
-Команду ввода "," поддерживать не нужно
+The input command <code>,</code> does not need to be supported
 
-Написать необходимые Unіt и функциональные тесты.
+Write the necessary Unіt and functional tests.
 
 Java 8, Gradle, Github.
 
 
-<h3><b>Операции BrainFuck:</b></h3>
+<h3><b>BrainFuck commands:</b></h3>
 
 
 	
-<code>\>	i++;	перейти к следующей ячейке</code>
-	
-<code>\<	i--;	перейти к предыдущей ячейке</code>
+<code>>	increment the data pointer (to point to the next cell to the right).</code>
 
-<code>+	arr[i]++;	увеличить значение в текущей ячейке на 1</code>
+<code><	decrement the data pointer (to point to the next cell to the left).</code>
 
-<code>-	arr[i]--;	уменьшить значение в текущей ячейке на 1</code>
+<code>+	increment (increase by one) the byte at the data pointer.</code>
 
-<code>.	putchar(arr[i]);	напечатать значение из текущей ячейки</code>
+<code>-	decrement (decrease by one) the byte at the data pointer.</code>
 
-<code>,	arr[i] = getchar();	ввести извне значение и сохранить в текущей ячейке</code>
+<code>.	output the byte at the data pointer.</code>
 
-<code>[	while(arr[i]){	если значение текущей ячейки ноль, перейти вперёд по тексту программы на ячейку, следующую за соответствующей ] (с учётом вложенности)</code>
+<code>,	accept one byte of input, storing its value in the byte at the data pointer.</code>
 
-<code>]	}	если значение текущей ячейки не нуль, перейти назад по тексту программы на символ [ (с учётом вложенности)</code>
+<code>[	if the byte at the data pointer is zero, then instead of moving the instruction pointer forward to the next command, jump it forward to the command after the matching ] command.</code>
+
+<code>]	if the byte at the data pointer is nonzero, then instead of moving the instruction pointer forward to the next command, jump it back to the command after the matching [ command.</code>
+
+
