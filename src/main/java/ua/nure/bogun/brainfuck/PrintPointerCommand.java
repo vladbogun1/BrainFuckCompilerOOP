@@ -1,10 +1,10 @@
 package ua.nure.bogun.brainfuck;
 
-public class PrintCommand implements Command {
+public class PrintPointerCommand implements Command {
     private BrainFuck brainFuck;
     private int count;
 
-    PrintCommand(BrainFuck brainFuck, int count) {
+    PrintPointerCommand(BrainFuck brainFuck, int count) {
         this.brainFuck = brainFuck;
         this.count = count;
     }
@@ -13,7 +13,7 @@ public class PrintCommand implements Command {
     public void execute() {
         int n = count;
         while (n > 0) {
-            brainFuck.output();
+            brainFuck.printPointer();
             n--;
         }
     }
